@@ -15,7 +15,7 @@ def read_md_file(filepath: str) -> str:
     with open(filepath, 'r') as f:
         content = f.read()
         html = markdown.markdown(content)
-        text = ''.join(BeautifulSoup(html).findAll(text=True))
+        text = ''.join(BeautifulSoup(html, features="html5lib").findAll(text=True))
 
     return text
 
