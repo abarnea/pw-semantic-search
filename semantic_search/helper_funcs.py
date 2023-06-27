@@ -53,19 +53,41 @@ def clean_and_preproc_data(input_data):
 
 def load_w2v(model_path="word2vec_model.bin"):
     """
-    Loads Word2Vec model.
+    Loads the Word2Vec model from a stored file.
+
+    Parameters:
+        model_path (str): Path to the Word2Vec model file (default: "word2vec_model.bin")
+
+    Returns:
+        (object) : Word2Vec model object
     """
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"The Word2Vec model file '{model_path}' does not exist.")
+
     return Word2Vec.load(model_path)
 
-def load_tfidf(vectorizer_path="tfidf_vectorizer.pkl",
-               matrix_path="tfidf_matrix.pkl"):
+def load_tfidf(vectorizer_path="tfidf_vectorizer.pkl", matrix_path="tfidf_matrix.pkl"):
     """
-    Loads tfidx matrix and vectorizer.
+    Loads the TF-IDF model vectorizer and matrix from stored files.
+
+    Parameters:
+        vectorizer_path (str): Path to the TF-IDF vectorizer file (default: "tfidf_vectorizer.pkl").
+        matrix_path (str): Path to the TF-IDF matrix file (default: "tfidf_matrix.pkl").
+
+    Returns:
+        vectorizer (object): TF-IDF vectorizer object
+        tfidf_matrix (object): TF-IDF matrix object
     """
+    if not os.path.exists(vectorizer_path):
+        raise FileNotFoundError(f"The TF-IDF vectorizer file '{vectorizer_path}' does not exist.")
+
+    if not os.path.exists(matrix_path):
+        raise FileNotFoundError(f"The TF-IDF matrix file '{matrix_path}' does not exist.")
+
     with open(vectorizer_path, 'rb') as f:
         vectorizer = pickle.load(f)
 
     with open(matrix_path, 'rb') as f:
-        tfidx_matrix = pickle.load(f)
+        tfidf_matrix = pickle.load(f)
 
-    return vectorizer, tfidx_matrix
+    return vectorizer, tfidf_matrix
