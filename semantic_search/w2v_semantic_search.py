@@ -8,9 +8,21 @@ import md_preprocessor as preprocessor
 import helper_funcs as helper
 
 
-def create_doc_embeddings(preproc_docs, model):
+def create_doc_embeddings(preproc_docs: dict, model: object) -> dict:
     """
-    Name
+    Create document embeddings by averaging the word embeddings of the tokens
+    of the preprocessed docs which are present in the model.
+
+    Parameters
+    -----------
+        preproc_docs (dict): preprocessed documents, keyed by filename with
+                values corresponding to the file content in tokenized form
+        model: the trained Word2Vec model
+
+    Returns
+    -----------
+        document_embeddings (dict): document embeddings dictionary keyed by
+            filename with values corresponding to the document embeddings
     """
     document_embeddings = {}
 
@@ -21,15 +33,21 @@ def create_doc_embeddings(preproc_docs, model):
 
     return document_embeddings
 
-def run_query(query_str: str, preproc_docs: dict, model):
+def run_query(query_str: str, preproc_docs: dict, model: object) -> list[str]:
     """
-    Performs a similarity search on the inputted query against the given Word2Vec model.
+    Performs a similarity search on the inputted query against a dictionary
+    of preprocessed documents and an inputted Word2Vec model.
 
-    Parameters:
+    Parameters
+    -----------
         query_str (str) : user query
+        preproc_docs (dict): preprocessed documents, keyed by filename with
+                values corresponding to the file content in tokenized form
+        model (object) : the trained Word2Vec model
     
-    Returns:
-        similar_docs (list[str]) : most similar docs in order
+    Returns
+    -----------
+        similar_docs (list[str]) : filenames of the most similar docs to the query
     """
     corrected_query = cleaner.correct_spelling(query_str)
     query_tokens = helper.clean_and_preproc_data(corrected_query)
@@ -47,14 +65,16 @@ def run_query(query_str: str, preproc_docs: dict, model):
 
     return similar_docs
 
-def get_relevant_files(query, preproc_docs, model, top_k=5, include_score=False, verbose=False):
+def get_relevant_files(query: str, preproc_docs: dict, model: object, top_k=5, include_score=False, verbose=False) -> list[str]:
     """
     Gets the top 'k' relevant files from an inputted query. Defaults to top
     5 most relevant files.
 
     Parameters:
         query (str) : question to search PW documentation for
-        preproc_docs (dict): Preprocessed docs keyed by filename corresponding to content tokens
+        preproc_docs (dict): preprocessed documents, keyed by filename with
+                values corresponding to the file content in tokenized form
+        model (object) : the trained Word2Vec model
         top_k (int) : top 'k' most relevant files to return (default: 5)
         include_score (bool) : if True, includes similarity score of file
         verbose (bool) : if True, prints files in addition to returning
@@ -81,4 +101,5 @@ def get_relevant_files(query, preproc_docs, model, top_k=5, include_score=False,
             print(f"Top {top_k} most relevant files to your query:\n")
             for i, file in enumerate(rel_files):
                 print(f"{i + 1}. {file}")
+
     return rel_files

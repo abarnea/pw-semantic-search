@@ -1,25 +1,38 @@
 import w2v_semantic_search as w2v
 import tfidf_semantic_search as tfidf
 
-def _get_common_files(w2v_output, tfidf_output):
+def get_common_files(w2v_output: list[str], tfidf_output: list[str]) -> list[str]:
     """
-    Gets the common filenames between two lists.
+    Gets the common file names between two lists
+
+    Parameters
+    -----------
+        w2v_output (list[str]) : list of file names from Word2Vec model
+        tfidf_output (list[str]) : list of file names from TF_IDF model
+
+    Returns
+    -----------
+        common_files (list[str]) : the common file names from the two inputted
+                models if there are any in common, otherwise takes the top three
+                files from the Word2Vec model output.
     """
+
     common_files = list(set(w2v_output).intersection(tfidf_output))
 
     return common_files if common_files != [] else w2v_output[:3]
 
-def get_file_content_from_filenames(filenames: list, docs: dict) -> list:
+def get_file_content_from_filenames(filenames: list, docs: dict) -> dict:
     """
     Helper function that takes a list of filenames and returns a list of
     the cleaned and preprocessed contents of those files.
 
-    Parameters:
+    Parameters
+    -----------
         filenames (list) : filenames to get content of
         docs (dict) : documents keyed by filename and valued with content
 
     Returns:
-        file_content (list) : content of each of the inputted filenames
+        file_content (dict) : content of each of the inputted filenames
     """
     return {file: docs[file] for file in filenames}
 
@@ -38,7 +51,8 @@ def semsearch(query,
     of those files between the two models after conducting a semantic search based
     on the query through trained Word2Vec and TF-IDF models on the documentation.
 
-    Parameters:
+    Parameters
+    -----------
         query (str) : Inputted user question
         preproc_docs (dict) : preprocessed documentation
         w2v_model : pre-trained Word2Vec model
@@ -48,7 +62,8 @@ def semsearch(query,
         include_score (bool) : if True, includes similarity score of file
         verbose (bool) : if True, prints files in addition to returning
 
-    Returns:
+    Returns
+    -----------
         common_content (dict) : the top_k most relevant files, keyed by filename
             and corresponding to the content of those respective docs
     """
@@ -67,7 +82,7 @@ def semsearch(query,
                                             include_score=include_score,
                                             verbose=verbose)
 
-    common_files = _get_common_files(w2v_output, tfidf_output)
+    common_files = get_common_files(w2v_output, tfidf_output)
 
     common_content = get_file_content_from_filenames(common_files, preproc_docs)
 

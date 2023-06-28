@@ -6,8 +6,19 @@ import helper_funcs as helper
 
 def format_gpt_input(gpt_docs: dict) -> dict:
     """
-    Helper function to turn the dict list
+    Formats the documentation to be passed into ChatGPT API into a joined
+    sentence structure to minimize GPT API token input.
+
+    Parameters
+    -----------
+        gpt_docs (dict) : Formatted documentation to be inputted into ChatGPT API
+
+    Returns
+    -----------
+        gpt_input (dict) : dictionary keyed by the same filenames, but the
+                the content is now strings instead of lists of string tokens
     """
+
     return {file : " ".join(content) for file, content in gpt_docs.items()}
 
 def run_gpt(query, *args, api_key=helper.get_api_key()):
@@ -29,7 +40,7 @@ def run_gpt(query, *args, api_key=helper.get_api_key()):
 
     gpt_prompt = "You are a helpful assistant in charge of helping users understand our platform."
     clarification_1 = "Your responses should not require users to search through our files. Instead, you can include relevant filenames as additional support resources if they need it."
-    clarification_2 = "When including a filename in your response, print in Proper formatting -- so without dashes or file extensions."
+    clarification_2 = "When telling a user to navigate to a documentation page in your response, print the file name in Proper formatting without dashes or file extensions."
     clarification_3 = "If the inputted query does not seem related to the PW documentation, respond to the user explaining that you are meant as an assistant for the Parallel Works platform."
 
     messages = [

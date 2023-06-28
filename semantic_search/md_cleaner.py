@@ -5,21 +5,46 @@ import md_preprocessor as preprocessor
 
 def _remove_whitespace(input_str: str) -> str:
     """
-    Removes whitespace from an input string.
+    Removes whitespace, i.e. additional spaces, from an input string.
+
+    Parameters
+    -----------
+        input_str (str) : inputted string
+
+    Returns
+    -----------
+        (str) : inputted string cleaned of whitespaces
     """
+
     return ' '.join(input_str.split())
 
 
 def _lower_str(input_str: str) -> str:
     """
-    Lowers the input string to lower case
+    Converts the inputted string into lowercase
+
+    Parameters
+    -----------
+        input_str (str) : inputted string
+
+    Returns
+    -----------
+        (str) : lowered input string
     """
     return input_str.lower()
 
 
 def _remove_punct_and_special_chars(input_str: str) -> str:
     """
-    Removes punctuation and special characters using Regex
+    Removes punctuation and special characters from a string using Regex.
+
+    Parameters
+    -----------
+        input_str (str) : inputted string
+
+    Returns
+    -----------
+        (str) : inputted string without punctuation or special characters
     """
     pattern = r'[^\w\s]'
     return re.sub(pattern, '', input_str)
@@ -27,7 +52,16 @@ def _remove_punct_and_special_chars(input_str: str) -> str:
 
 def _filter_sidebar_pos(input_str: str) -> str:
     """
-    Removes sidebar positioning.
+    Markdown-specific function which removes sidebar positioning labels from
+    plain text input.
+
+    Parameters
+    -----------
+        input_str (str) : inputted string
+
+    Returns
+    -----------
+        (str) : inputted string without sidebar position labels
     """
     pattern = r"sidebar_position(?: \d+)? "
     return re.sub(pattern, "", input_str)
