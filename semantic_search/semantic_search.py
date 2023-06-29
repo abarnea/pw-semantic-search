@@ -74,16 +74,16 @@ def semsearch(query,
                                         include_score=include_score,
                                         verbose=verbose)
 
-    tfidf_output = tfidf.get_relevant_files(query,
-                                            preproc_docs,
-                                            vectorizer,
-                                            tfidf_matrix,
-                                            top_k=top_k,
-                                            include_score=include_score,
-                                            verbose=verbose)
+    # tfidf_output = tfidf.get_relevant_files(query,
+    #                                         preproc_docs,
+    #                                         vectorizer,
+    #                                         tfidf_matrix,
+    #                                         top_k=top_k,
+    #                                         include_score=include_score,
+    #                                         verbose=verbose)
 
-    common_files = get_common_files(w2v_output, tfidf_output)
+    # common_files = get_common_files(w2v_output, tfidf_output)
 
-    common_content = get_file_content_from_filenames(common_files, preproc_docs)
+    w2v_content = get_file_content_from_filenames(w2v_output, preproc_docs)
 
     return common_content

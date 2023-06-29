@@ -1,6 +1,7 @@
 import gensim
 import gensim.downloader
 from gensim.models import Word2Vec
+from gensim.matutils import unitvec
 import numpy as np
 
 import md_cleaner as cleaner
@@ -29,7 +30,7 @@ def create_doc_embeddings(preproc_docs: dict, model: object) -> dict:
     for filename, tokens in preproc_docs.items():
         embeddings = [model.wv[word] for word in tokens if word in model.wv]
         if embeddings:
-            document_embeddings[filename] = gensim.matutils.unitvec(np.mean(embeddings, axis=0))
+            document_embeddings[filename] = unitvec(np.mean(embeddings, axis=0))
 
     return document_embeddings
 
@@ -52,7 +53,7 @@ def run_query(query_str: str, preproc_docs: dict, model: object) -> list[str]:
     corrected_query = cleaner.correct_spelling(query_str)
     query_tokens = helper.clean_and_preproc_data(corrected_query)
     average_vec_rep = [model.wv[token] for token in query_tokens if token in model.wv]
-    query_embedding = gensim.matutils.unitvec(np.mean(average_vec_rep, axis=0))
+    query_embedding = unitvec(np.mean(average_vec_rep, axis=0))
 
     doc_embeddings = create_doc_embeddings(preproc_docs, model)
 

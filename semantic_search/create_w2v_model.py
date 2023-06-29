@@ -20,8 +20,11 @@ def create_model(docs: dict, add_train_data=True):
     model = Word2Vec(corpus, vector_size=500, window=5, min_count=5, workers=4)
 
     if add_train_data:
-        pretrained_model = gensim.downloader.load('word2vec-google-news-300')
-        model.build_vocab_from_freq(pretrained_model.key_to_index, corpus_count=len(corpus), update=True)
+        # googlenews_model = gensim.downloader.load('word2vec-google-news-300')
+        # model.build_vocab_from_freq(googlenews_model.key_to_index, corpus_count=len(corpus), update=True)
+        wikinews_model_path = "wiki-news-300d-1M-subword.vec"
+        wikinews_model = gensim.models.KeyedVectors.load_word2vec_format(wikinews_model_path, binary=False)
+        model.build_vocab_from_freq(wikinews_model.key_to_index, corpus_count=len(corpus), update=True)
 
     return model
 

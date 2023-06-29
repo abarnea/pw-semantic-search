@@ -3,6 +3,7 @@ import json
 import openai
 from semantic_search import semsearch
 import helper_funcs as helper
+import doc_reader as reader
 
 def format_gpt_input(gpt_docs: dict) -> dict:
     """
@@ -20,6 +21,27 @@ def format_gpt_input(gpt_docs: dict) -> dict:
     """
 
     return {file : " ".join(content) for file, content in gpt_docs.items()}
+
+def replace_filenames_with_links(gpt_output: str, hyperlinks: dict) -> str:
+    """
+    Replaces filenames in Ask PW output with hyperlinks in markdown format.
+
+    Parameters
+    -----------
+        gpt_output (str) : output from ChatGPT PW API
+        hyperlinks (dict) : the hyperlinks corresponding to the file names
+
+    Returns
+    -----------
+        formatted_output (str) : gpt_output but with file names replaced with hyperlinks
+    """
+    formatted_output = gpt_output
+
+    for filename, link in hyperlinks.items():
+        hyperlink = f"[{filename}]({link})"
+        formatted_output = formatted_output.replace(filename, hyperlink)
+
+    return formatted_output
 
 def run_gpt(query, *args, api_key=helper.get_api_key()):
     """
@@ -40,14 +62,12 @@ def run_gpt(query, *args, api_key=helper.get_api_key()):
 
     gpt_prompt = "You are a helpful assistant in charge of helping users understand our platform."
     clarification_1 = "Your responses should not require users to search through our files. Instead, you can include relevant filenames as additional support resources if they need it."
-    clarification_2 = "When telling a user to navigate to a documentation page in your response, print the file name in Proper formatting without dashes or file extensions."
-    clarification_3 = "If the inputted query does not seem related to the PW documentation, respond to the user explaining that you are meant as an assistant for the Parallel Works platform."
+    clarification_2 = "If the inputted query does not seem related to the PW documentation, respond to the user explaining that you are meant as an assistant for the Parallel Works platform."
 
     messages = [
         {"role": "system", "content": gpt_prompt},
         {"role": "system", "content": clarification_1},
         {"role": "system", "content": clarification_2},
-        {"role": "system", "content": clarification_3},
         {"role": "user", "content": query}
     ]
 
@@ -70,6 +90,7 @@ if __name__ == "__main__":
 
     docs_path = sys.argv[2] if len(sys.argv) >= 3 else "docs/docs"
     preproc_docs = helper.read_clean_process_data(docs_path)
+    hyperlink_dict = reader.create_hyperlink_dict(docs_path)
 
     w2v_model = helper.load_w2v()
     vectorizer, tfidf_matrix = helper.load_tfidf()
@@ -80,5 +101,7 @@ if __name__ == "__main__":
 
     reply = run_gpt(query, gpt_args)
 
-    print(f"\n{query}\n\n{reply}\n")
+    hyperlink_reply = replace_filenames_with_links(reply, hyperlink_dict)
+
+    print(f"{hyperlink_reply}\n")
 
