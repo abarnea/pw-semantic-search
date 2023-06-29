@@ -86,4 +86,4 @@ def semsearch(query,
 
     w2v_content = get_file_content_from_filenames(w2v_output, preproc_docs)
 
-    return common_content
+    return w2v_content
