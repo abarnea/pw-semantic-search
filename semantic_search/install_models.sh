@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ "$1" = "-u" ]
+then
+    echo "Deleting existing 'docs' directory..."
+    rm -rf docs
+    echo "Cloning Parallel Works documentation from GitHub..."
+    git clone https://github.com/parallelworks/docs
+    echo "Parallel Works documentation cloned successfully!"
+    shift
+fi
+
 if [ -z "$1" ] && [ ! -d "docs" ]
 then
     echo "Warning: Parallel Works documentation folder not found. Please specify the path for the PW docs to train the models."

@@ -5,7 +5,27 @@ from semantic_search import semsearch
 import helper_funcs as helper
 import doc_reader as reader
 
-def format_gpt_input(gpt_docs: dict) -> dict:
+MAX_TOKENS = 3975
+
+def valid_gpt_input(cand_json: str) -> bool:
+    """
+    Checks if the candidate json input fits in GPT token input of 4097 - 500 =
+    3597 total tokens.
+
+    Parameters
+    -----------
+        cand_json (str) : Candidate json input to test
+
+    Returns
+    -----------
+        fits_in_gpt (bool) : Boolean flag on whether the candidate can be passed
+                    into ChatGPT API
+    """
+    token_count = len(cand_json) / 4
+
+    return token_count < MAX_TOKENS
+
+def format_gpt_input(gpt_docs: dict) -> str:
     """
     Formats the documentation to be passed into ChatGPT API into a joined
     sentence structure to minimize GPT API token input.
@@ -16,11 +36,41 @@ def format_gpt_input(gpt_docs: dict) -> dict:
 
     Returns
     -----------
-        gpt_input (dict) : dictionary keyed by the same filenames, but the
-                the content is now strings instead of lists of string tokens
+        gpt_input (str) : json-formatted dictionary keyed by the same filenames,
+                but the the content is now strings instead of lists of string tokens
     """
+    return json.dumps({file : " ".join(content) for file, content in gpt_docs.items()})
 
-    return {file : " ".join(content) for file, content in gpt_docs.items()}
+def optimize_gpt_input(gpt_docs: dict) -> str:
+    """
+    Optimizes the documentation passed into ChatGPT by filling in the maximum
+    number of tokens that can be fit from five files. If the five most relevant
+    files go over the maximum number of GPT API tokens, this function cuts out
+    the least relevant file, and tries again until the json-formatted dictionary
+    can be passed into the ChatGPT API with as many relevant documents as possible
+    and while staying below the maximum token count.
+
+    Parameters
+    -----------
+        gpt_docs (dict) : Formatted documentation to be inputted into ChatGPT API
+
+    Returns
+    -----------
+        gpt_input (str) : json-formatted string dictionary that has been trimmed
+                from lest relevant to most in order to fit into ChatGPT API
+                max token count of 3597 for inputs.
+    """
+    temp_docs = gpt_docs.copy()
+    cand = format_gpt_input(temp_docs)
+
+    while not valid_gpt_input(cand):
+        file_keys = list(temp_docs.keys())
+        file_to_remove = file_keys[-1]
+        temp_docs.pop(file_to_remove)
+        cand = format_gpt_input(temp_docs)
+
+    return cand
+
 
 def replace_filenames_with_links(gpt_output: str, hyperlinks: dict) -> str:
     """
@@ -43,7 +93,7 @@ def replace_filenames_with_links(gpt_output: str, hyperlinks: dict) -> str:
 
     return formatted_output
 
-def run_gpt(query, *args, api_key=helper.get_api_key()):
+def run_gpt(query, formatte_docs, api_key=helper.get_api_key()):
     """
     Function that runs the gpt-3.5-turbo AI API on a query and set of arguments
     Arguments should consist of a variable length list, where each
@@ -52,7 +102,8 @@ def run_gpt(query, *args, api_key=helper.get_api_key()):
 
     Paramaters:
         query (str) : inputted query from user
-        *args (list[list[str]]) : array containing document information tokens
+        formatted_docs (list[str]) : json-formatted dictionary containing file and
+                content info from semantic search
         api_key (str) : user API key to run
     
     Returns:
@@ -71,8 +122,7 @@ def run_gpt(query, *args, api_key=helper.get_api_key()):
         {"role": "user", "content": query}
     ]
 
-    for tokens in args:
-        messages.append({"role": "user", "content": json.dumps(tokens)})
+    messages.append({"role": "user", "content": formatte_docs})
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -97,9 +147,9 @@ if __name__ == "__main__":
 
     ss_docs = semsearch(query, preproc_docs, w2v_model, vectorizer, tfidf_matrix)
 
-    gpt_args = format_gpt_input(ss_docs)
+    gpt_input = optimize_gpt_input(ss_docs)
 
-    reply = run_gpt(query, gpt_args)
+    reply = run_gpt(query, gpt_input)
 
     hyperlink_reply = replace_filenames_with_links(reply, hyperlink_dict)
 
