@@ -5,7 +5,7 @@ from semantic_search import semsearch
 import helper_funcs as helper
 import doc_reader as reader
 
-MAX_TOKENS = 3975
+MAX_TOKENS = 3500
 
 def valid_gpt_input(cand_json: str) -> bool:
     """
@@ -113,12 +113,14 @@ def run_gpt(query, formatte_docs, api_key=helper.get_api_key()):
 
     gpt_prompt = "You are a helpful assistant in charge of helping users understand our platform."
     clarification_1 = "Your responses should not require users to search through our files. Instead, you can include relevant filenames as additional support resources if they need it."
-    clarification_2 = "If the inputted query does not seem related to the PW documentation, respond to the user explaining that you are meant as an assistant for the Parallel Works platform."
+    clarification_2 = "If the inputted query isn't related to PW documentation, respond explaining that you are meant as an assistant for the Parallel Works platform. Tangentially related queries are okay."
+    clarification_3 = "If the message passed to you is `Your query does not match anything in our system.`, explain that we currently don't have documentation related to that query."
 
     messages = [
         {"role": "system", "content": gpt_prompt},
         {"role": "system", "content": clarification_1},
         {"role": "system", "content": clarification_2},
+        {"role": "system", "content": clarification_3},
         {"role": "user", "content": query}
     ]
 
@@ -132,7 +134,7 @@ def run_gpt(query, formatte_docs, api_key=helper.get_api_key()):
     reply = response.choices[0].message.content
     return reply
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) < 2:
         raise ValueError("Query input required.")
 
@@ -154,4 +156,7 @@ if __name__ == "__main__":
     hyperlink_reply = replace_filenames_with_links(reply, hyperlink_dict)
 
     print(f"{hyperlink_reply}\n")
+
+if __name__ == "__main__":
+    main()
 
