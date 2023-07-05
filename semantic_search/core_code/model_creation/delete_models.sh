@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ../../models
+
 if [ -f "word2vec_model.bin" ]
 then
     rm word2vec_model.bin

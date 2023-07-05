@@ -9,6 +9,7 @@ fi
 
 if [ "$1" = "-t" ]
 then
+  cd ../core_ce/model_creation
   ./delete_models.sh
   shift
   if [ "$1" = "-u" ]
@@ -20,6 +21,7 @@ then
     ./install_models.sh
   fi
   shift
+  cd ../../ask_pw_app
 fi
 
 streamlit run askpw_app.py

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd
+cd ../..
 
 if [ "$1" = "-u" ]
 then
@@ -18,9 +18,12 @@ then
     exit 1
 fi
 
+cd models
+
 if [ ! -f "word2vec_model.bin" ]
 then
     echo "word2vec_model.bin not found. Creating Word2Vec model..."
+    cd ../core_code/model_creation
     if [ -z "$1" ]
     then
         python3 create_w2v_model.py
@@ -28,6 +31,7 @@ then
         python3 create_w2v_model.py "$1"
     fi
     echo "Word2Vec model created successfully!"
+    cd ../../models
 else
     echo "word2vec_model.bin already exists. Skipping Word2Vec model creation."
 fi
@@ -35,6 +39,7 @@ fi
 if [ ! -f "tfidf_vectorizer.pkl" ] || [ ! -f "tfidf_matrix.pkl" ]
 then
     echo "tfidf_vectorizer.pkl or tfidf_matrix.pkl not found. Creating TF-IDF models..."
+    cd ../core_code/model_creation
     if [ -z "$1" ]
     then
         python3 create_tfidf_model.py
@@ -42,6 +47,7 @@ then
         python3 create_tfidf_model.py "$1"
     fi
     echo "TF-IDF model created successfully!"
+    cd ../../models
 else
     echo "Both tfidf_vectorizer.pkl and tfidf_matrix.pkl exist. Skipping TF-IDF model creation."
 fi

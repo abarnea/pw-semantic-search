@@ -112,7 +112,7 @@ def run_gpt(query, formatte_docs, api_key=helper.get_api_key()):
     openai.api_key = api_key
 
     gpt_prompt = "You are a helpful assistant in charge of helping users understand our platform."
-    clarification_1 = "Your responses should not require users to search through our files. Instead, you can include relevant filenames as additional support resources if they need it."
+    clarification_1 = "Your responses should not require users to search through our files and should be fully comprehensive. However, always include the most relevant files to the query at the bottom if the user would like to conduct further reading."
     clarification_2 = "If the inputted query isn't related to PW documentation, respond explaining that you are meant as an assistant for the Parallel Works platform. Tangentially related queries are okay."
     clarification_3 = "If the message passed to you is `Your query does not match anything in our system.`, explain that we currently don't have documentation related to that query."
 

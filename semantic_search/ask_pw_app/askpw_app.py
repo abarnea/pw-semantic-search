@@ -1,6 +1,7 @@
 import subprocess
 import streamlit as st
 import json
+import os
 
 QUERIES_PATH = "queries.json"
 
@@ -108,6 +109,11 @@ def display_sidebar(queries: dict):
         query_expander = st.sidebar.expander(f"Query {num_queries - i}: {query}")
         with query_expander:
             st.write(answer)
+
+    if os.path.isfile(QUERIES_PATH):
+        clear_button = st.sidebar.button("Clear Queries")
+        if clear_button:
+            subprocess.run(["rm", "-f", QUERIES_PATH])
 
 if __name__ == "__main__":
     main()
