@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ../core_code
+
 read -sp 'Please enter your OpenAI API key: ' open_api_key
 
 if [ -f "openai_api_key.env" ]

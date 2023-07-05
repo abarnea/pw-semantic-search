@@ -8,6 +8,8 @@ import doc_reader as reader
 import md_cleaner as cleaner
 import md_preprocessor as preprocessor
 
+SUPER_PATH = "../models/"
+
 def get_api_key():
     """
     Gets the OpenAI API Key from environment.
@@ -51,7 +53,7 @@ def clean_and_preproc_data(input_data):
 
     return cp_data
 
-def load_w2v(model_path="word2vec_model.bin"):
+def load_w2v(model_path=SUPER_PATH + "word2vec_model.bin"):
     """
     Loads the Word2Vec model from a stored file.
 
@@ -66,7 +68,8 @@ def load_w2v(model_path="word2vec_model.bin"):
 
     return Word2Vec.load(model_path)
 
-def load_tfidf(vectorizer_path="tfidf_vectorizer.pkl", matrix_path="tfidf_matrix.pkl"):
+def load_tfidf(vectorizer_path=SUPER_PATH + "tfidf_vectorizer.pkl",
+               matrix_path=SUPER_PATH + "tfidf_matrix.pkl"):
     """
     Loads the TF-IDF model vectorizer and matrix from stored files.
 

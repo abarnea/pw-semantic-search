@@ -140,7 +140,7 @@ def main():
 
     query = sys.argv[1]
 
-    docs_path = sys.argv[2] if len(sys.argv) >= 3 else "docs/docs"
+    docs_path = sys.argv[2] if len(sys.argv) >= 3 else "../docs/docs"
     preproc_docs = helper.read_clean_process_data(docs_path)
     hyperlink_dict = reader.create_hyperlink_dict(docs_path)
 

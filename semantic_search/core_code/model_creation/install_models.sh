@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd
+
 if [ "$1" = "-u" ]
 then
     echo "Deleting existing 'docs' directory..."
