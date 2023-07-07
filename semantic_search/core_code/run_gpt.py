@@ -9,8 +9,9 @@ MAX_TOKENS = 3500
 
 def valid_gpt_input(cand_json: str) -> bool:
     """
-    Checks if the candidate json input fits in GPT token input of 4097 - 500 =
-    3597 total tokens.
+    Checks if the candidate json input fits in GPT token input of 3500 total tokens.
+    Choice is arbitrary to allow for 597 total tokens for setting system prompts and 
+    GPT output.
 
     Parameters
     -----------
