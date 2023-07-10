@@ -24,5 +24,5 @@ then
   cd ../../ask_pw_app
 fi
 
-streamlit run askpw_app.py
+streamlit run ask_pw_app.py
 
