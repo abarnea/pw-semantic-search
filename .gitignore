@@ -1,0 +1,4 @@
+.DS_Store
+*.env
+queries.json
+__pycache__
