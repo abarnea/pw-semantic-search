@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd app
+
 if [ "$1" = "-c" ]
 then
   echo "Clearing previously stored queries..."

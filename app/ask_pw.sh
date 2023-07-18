@@ -8,5 +8,5 @@ fi
 
 query=$1
 
-cd ../core_code
+cd ../src
 python3 run_gpt.py "$query"

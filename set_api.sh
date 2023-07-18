@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../core_code
+cd src
 
 read -sp 'Please enter your OpenAI API key: ' open_api_key
 

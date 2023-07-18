@@ -43,11 +43,11 @@ def run_script(query: str):
     output, error = process.communicate()
     output = output.decode("utf-8")
 
-    st.subheader("Answer:")
-
     if error:
-        st.subheader("Script Error")
+        st.subheader("Script Error:")
         st.error(error.decode("utf-8"))
+    else:
+        st.subheader("Answer:")
 
     st.write(output)
 
