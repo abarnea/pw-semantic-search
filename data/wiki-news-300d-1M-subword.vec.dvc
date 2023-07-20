@@ -1,0 +1,5 @@
+outs:
+- md5: 1166bec175bdba1d5d3364fbcbc191bf
+  size: 2256858740
+  hash: md5
+  path: wiki-news-300d-1M-subword.vec

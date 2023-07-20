@@ -5,14 +5,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 
-sys.path.append("..")
-
 import doc_reader as reader
 import md_cleaner as cleaner
 import md_preprocessor as preprocessor
 import helper_funcs as helper
 
-MODEL_PATH = "../../models/"
+MODEL_PATH = "../models/"
 
 def initialize_vectorizer(docs):
     """
@@ -30,7 +28,7 @@ def initialize_vectorizer(docs):
     return vectorizer, tfidf_matrix
 
 if __name__ == "__main__":
-    docs_path = sys.argv[1] if len(sys.argv) >= 2 else "../../docs/docs"
+    docs_path = sys.argv[1] if len(sys.argv) >= 2 else "../data/docs"
     vectorizer, tfidf_matrix = initialize_vectorizer(docs_path)
 
     with open(MODEL_PATH + "tfidf_vectorizer.pkl", "wb") as f:

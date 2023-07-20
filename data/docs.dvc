@@ -1,4 +1,4 @@
-md5: 06c7dd924729a17e428fd7605711d990
+md5: 287a5eeef7c9a82dc2a000c5efabf668
 frozen: true
 deps:
 - path: .
@@ -6,8 +6,8 @@ deps:
     url: https://github.com/parallelworks/docs.git
     rev_lock: 1b77c558cf0dd41ce2e4fa5b27864c2df16cd876
 outs:
-- md5: ba1e786a1dc553805719fd32d176f0c9.dir
-  size: 241541940
-  nfiles: 1112
+- md5: 1a53f88855d11a1e3e0854b792fe23af.dir
+  size: 870585290
+  nfiles: 3652
   hash: md5
   path: docs

@@ -1,8 +1,9 @@
 stages:
   train:
-    cmd: python3 src/model_creation/create_w2v_model.py data/docs
+    cmd: python3 src/create_w2v_model.py data/docs
     deps:
     - data/docs
-    - src/model_creation/create_w2v_model.py
+    - data/wiki-news-300d-1M-subword.vec
+    - src/create_w2v_model.py
     outs:
-    - data/models
+    - models
