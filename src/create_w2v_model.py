@@ -10,7 +10,9 @@ import md_cleaner as cleaner
 import md_preprocessor as preprocessor
 import helper_funcs as helper
 
-SUPER_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SUPER_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_PATH = os.path.join(SUPER_PATH, "data")
+MODEL_PATH = os.path.join(SUPER_PATH, "models")
 
 def create_model(docs: dict, add_train_data=True):
     """
@@ -35,14 +37,14 @@ def create_model(docs: dict, add_train_data=True):
     if add_train_data:
         # googlenews_model = gensim.downloader.load('word2vec-google-news-300')
         # model.build_vocab_from_freq(googlenews_model.key_to_index, corpus_count=len(corpus), update=True)
-        wikinews_model_path = os.path.join(SUPER_DIR, "data/wiki-news-300d-1M-subword.vec")
+        wikinews_model_path = os.path.join(DATA_PATH, "wiki-news-300d-1M-subword.vec")
         wikinews_model = gensim.models.KeyedVectors.load_word2vec_format(wikinews_model_path, binary=False)
         model.build_vocab_from_freq(wikinews_model.key_to_index, corpus_count=len(corpus), update=True)
 
     return model
 
 if __name__ == "__main__":
-    input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "data/docs"
-    docs_path = os.path.join(SUPER_DIR, input_docs_path)
+    input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "docs"
+    docs_path = os.path.join(DATA_PATH, input_docs_path)
     model = create_model(docs_path)
-    model.save(os.path.join(SUPER_DIR, "models/word2vec_model.bin"))
+    model.save(os.path.join(MODEL_PATH, "word2vec_model.bin"))

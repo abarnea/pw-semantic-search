@@ -1,0 +1,31 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python3 src/create_w2v_model.py docs
+    deps:
+    - path: data/docs
+      hash: md5
+      md5: f6b5e7b18d986959c8d481c1f6b99455.dir
+      size: 125556506
+      nfiles: 587
+    - path: data/wiki-news-300d-1M-subword.vec
+      hash: md5
+      md5: 1166bec175bdba1d5d3364fbcbc191bf
+      size: 2256858740
+    - path: src/create_w2v_model.py
+      hash: md5
+      md5: c56f55efb5d0c7654e37a8e210fb847a
+      size: 1823
+    outs:
+    - path: models/word2vec_model.bin
+      hash: md5
+      md5: f3c62638412795f135ef3ce493cbecad
+      size: 32746557
+    - path: models/word2vec_model.bin.syn1neg.npy
+      hash: md5
+      md5: a32e57f925788095fc30c7ac9a44250c
+      size: 2000264128
+    - path: models/word2vec_model.bin.wv.vectors.npy
+      hash: md5
+      md5: 839335ba42395cb898cf55000bb04e46
+      size: 2000264128
