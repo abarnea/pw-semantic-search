@@ -10,7 +10,7 @@ import md_cleaner as cleaner
 import md_preprocessor as preprocessor
 import helper_funcs as helper
 
-MODEL_PATH = "../models/"
+SUPER_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def create_model(docs: dict, add_train_data=True):
     """
@@ -35,13 +35,14 @@ def create_model(docs: dict, add_train_data=True):
     if add_train_data:
         # googlenews_model = gensim.downloader.load('word2vec-google-news-300')
         # model.build_vocab_from_freq(googlenews_model.key_to_index, corpus_count=len(corpus), update=True)
-        wikinews_model_path = "../data/wiki-news-300d-1M-subword.vec"
+        wikinews_model_path = os.path.join(SUPER_DIR, "data/wiki-news-300d-1M-subword.vec")
         wikinews_model = gensim.models.KeyedVectors.load_word2vec_format(wikinews_model_path, binary=False)
         model.build_vocab_from_freq(wikinews_model.key_to_index, corpus_count=len(corpus), update=True)
 
     return model
 
 if __name__ == "__main__":
-    docs_path = sys.argv[1] if len(sys.argv) >= 2 else "../data/docs"
+    input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "data/docs"
+    docs_path = os.path.join(SUPER_DIR, input_docs_path)
     model = create_model(docs_path)
-    model.save(MODEL_PATH + "word2vec_model.bin")
+    model.save(os.path.join(SUPER_DIR, "models/word2vec_model.bin"))

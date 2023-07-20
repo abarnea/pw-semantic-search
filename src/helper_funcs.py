@@ -23,7 +23,16 @@ def get_api_key():
 
 def read_clean_process_data(docs: str) -> dict:
     """
-    Read, clean, and process data
+    Reads, cleans, and processes input documentation data using the doc_reader,
+    md_cleaner, and md_preprocessor stages.
+
+    Parameters
+    -----------
+        docs (str) : path to documentation folder
+
+    Returns
+    -----------
+        preproc_docs (dict) : cleaned and preprocessed documentation data
     """
     if not os.path.exists(docs):
         raise FileNotFoundError
