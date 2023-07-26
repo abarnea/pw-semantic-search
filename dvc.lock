@@ -5,9 +5,9 @@ stages:
     deps:
     - path: data/docs
       hash: md5
-      md5: c8503cf12b505cac8d6adb3b6694277d.dir
-      size: 127596334
-      nfiles: 602
+      md5: 85996337087e8952a0c5c82f87602596.dir
+      size: 125413161
+      nfiles: 583
     - path: data/wiki-news-300d-1M-subword.vec
       hash: md5
       md5: 1166bec175bdba1d5d3364fbcbc191bf
@@ -19,13 +19,13 @@ stages:
     outs:
     - path: models/word2vec_model.bin
       hash: md5
-      md5: 07f33406b00d9f93074d5a3b029722a6
+      md5: 7d3b1407731a59da51aac7996ab8dc1d
       size: 32746955
     - path: models/word2vec_model.bin.syn1neg.npy
       hash: md5
-      md5: ec0ecc26ac870a3ff8aae02efa30d5cb
+      md5: f2457858d55682b6f336046e09e8e7ee
       size: 2000286128
     - path: models/word2vec_model.bin.wv.vectors.npy
       hash: md5
-      md5: 4e75dc9e6625b04a784fd3fb3306fed0
+      md5: 3547abf859103b0d2e5654b46d98a91d
       size: 2000286128

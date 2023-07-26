@@ -1,9 +1,9 @@
-md5: af7d640363deb54de9642a8e9fffe479
+md5: f9290ca344636428620c8c2a04b49ecf
 frozen: true
 deps:
 - path: .
   repo:
-    url: https://github.com/parallelworks/docs.git
+    url: git@github.com:parallelworks/docs.git
     rev_lock: 07bc8c20ed109695ed0988ec8ae9bf280b1eeaba
 outs:
 - md5: 85996337087e8952a0c5c82f87602596.dir
