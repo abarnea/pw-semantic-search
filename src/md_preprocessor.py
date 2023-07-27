@@ -19,6 +19,7 @@ def tokenize_str(input_str: str) -> list[str]:
     -----------
         (list[str]) : tokenized input string
     """
+    nltk.download('punkt')
     return word_tokenize(input_str)
 
 def _remove_stopwords(tokens: list[str]) -> list[str]:
@@ -33,6 +34,7 @@ def _remove_stopwords(tokens: list[str]) -> list[str]:
     -----------
         (list[str]) : tokenized string with stopwords removed
     """
+    nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
     return [token for token in tokens if token not in stop_words]
 
@@ -95,7 +97,6 @@ def preprocess_str(cleaned_str: str) -> list[str]:
     Returns:
         preproc_tokens (list[str]) : preprocessed tokens of a string
     """
-    nltk.download("punkt")
     tokens = tokenize_str(cleaned_str)
 
     preproc_funcs = [_remove_stopwords, _lemmatize_tokens, _clean_tokens] 
