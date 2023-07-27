@@ -47,9 +47,12 @@ def main():
     """
     input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "docs"
     docs_path = os.path.join(DATA_PATH, input_docs_path)
+
     model = create_model(docs_path)
+
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_PATH)
+
     model.save(os.path.join(MODEL_PATH, "word2vec_model.bin"))
 
 if __name__ == "__main__":
