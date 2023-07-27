@@ -69,6 +69,7 @@ def _lemmatize_tokens(tokens: list[str]) -> list[str]:
     -----------
         (list[str]) : tokenized string with words lemmatized
     """
+    nltk.download('wordnet')
     lemmatizer = WordNetLemmatizer()
     return [lemmatizer.lemmatize(token) for token in tokens]
 
