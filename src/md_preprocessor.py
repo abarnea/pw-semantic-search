@@ -1,4 +1,5 @@
 import re
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -94,6 +95,7 @@ def preprocess_str(cleaned_str: str) -> list[str]:
     Returns:
         preproc_tokens (list[str]) : preprocessed tokens of a string
     """
+    nltk.download("punkt")
     tokens = tokenize_str(cleaned_str)
 
     preproc_funcs = [_remove_stopwords, _lemmatize_tokens, _clean_tokens] 
