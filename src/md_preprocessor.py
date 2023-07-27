@@ -1,5 +1,4 @@
 import re
-import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -19,7 +18,6 @@ def tokenize_str(input_str: str) -> list[str]:
     -----------
         (list[str]) : tokenized input string
     """
-    nltk.download('punkt')
     return word_tokenize(input_str)
 
 def _remove_stopwords(tokens: list[str]) -> list[str]:
@@ -34,7 +32,6 @@ def _remove_stopwords(tokens: list[str]) -> list[str]:
     -----------
         (list[str]) : tokenized string with stopwords removed
     """
-    nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
     return [token for token in tokens if token not in stop_words]
 
@@ -69,7 +66,6 @@ def _lemmatize_tokens(tokens: list[str]) -> list[str]:
     -----------
         (list[str]) : tokenized string with words lemmatized
     """
-    nltk.download('wordnet')
     lemmatizer = WordNetLemmatizer()
     return [lemmatizer.lemmatize(token) for token in tokens]
 

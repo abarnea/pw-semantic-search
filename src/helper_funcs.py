@@ -1,6 +1,7 @@
 # Helper functions
 import os
 import pickle
+import nltk
 from gensim.models import Word2Vec
 from dotenv import load_dotenv
 
@@ -103,3 +104,16 @@ def load_tfidf(vectorizer_path=SUPER_PATH + "tfidf_vectorizer.pkl",
         tfidf_matrix = pickle.load(f)
 
     return vectorizer, tfidf_matrix
+
+def check_nltk_data():
+    nltk_packages = ['punkt', 'stopwords', 'wordnet']
+
+    for package in nltk_packages:
+        try:
+            nltk.data.find(f'corpora/{package}')
+        except LookupError:
+            print(f"Downloading '{package}' data...")
+            nltk.download(package)
+            print(f"'{package}' data downloaded successfully.")
+        else:
+            print(f"'{package}' data is already downloaded.")

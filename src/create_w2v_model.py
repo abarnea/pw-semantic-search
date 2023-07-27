@@ -3,16 +3,13 @@ import os
 import gensim
 import gensim.downloader
 from gensim.models import Word2Vec
-import numpy as np
 
-import doc_reader as reader
-import md_cleaner as cleaner
-import md_preprocessor as preprocessor
 import helper_funcs as helper
 
 SUPER_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(SUPER_PATH, "data")
 MODEL_PATH = os.path.join(SUPER_PATH, "models")
+
 
 def create_model(docs: dict, add_train_data=True):
     """
@@ -28,6 +25,7 @@ def create_model(docs: dict, add_train_data=True):
     -----------
         model (object) : Word2Vec model to be saved
     """
+    helper.check_nltk_data()
 
     preproc_docs = helper.read_clean_process_data(docs)
 
@@ -43,8 +41,16 @@ def create_model(docs: dict, add_train_data=True):
 
     return model
 
-if __name__ == "__main__":
+def main():
+    """
+    Main execution function for creating the Word2Vec model.
+    """
     input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "docs"
     docs_path = os.path.join(DATA_PATH, input_docs_path)
     model = create_model(docs_path)
+    if not os.path.exists(MODEL_PATH):
+        os.makedirs(MODEL_PATH)
     model.save(os.path.join(MODEL_PATH, "word2vec_model.bin"))
+
+if __name__ == "__main__":
+    main()

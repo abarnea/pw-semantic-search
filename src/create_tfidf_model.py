@@ -18,6 +18,8 @@ def initialize_vectorizer(docs):
     """
     Initializes a TF-IDF vectorizer model on inputted documents.
     """
+    helper.check_nltk_data()
+
     preproc_docs = helper.read_clean_process_data(docs)
 
     vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english')
@@ -29,13 +31,23 @@ def initialize_vectorizer(docs):
 
     return vectorizer, tfidf_matrix
 
-if __name__ == "__main__":
+def main():
+    """
+    Main execution function for creating the TF-IDF model.
+    """
     input_docs_path = sys.argv[1] if len(sys.argv) >= 2 else "docs"
     docs_path = os.path.join(DATA_PATH, input_docs_path)
     vectorizer, tfidf_matrix = initialize_vectorizer(docs_path)
+
+    if not os.path.exists(MODEL_PATH):
+        os.makedirs(MODEL_PATH)
 
     with open(os.path.join(MODEL_PATH, "tfidf_vectorizer.pkl"), "wb") as f:
         pickle.dump(vectorizer, f)
 
     with open(os.path.join(MODEL_PATH, "tfidf_matrix.pkl"), "wb") as f:
         pickle.dump(tfidf_matrix, f)
+
+
+if __name__ == "__main__":
+    main()
