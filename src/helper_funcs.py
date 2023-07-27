@@ -106,6 +106,9 @@ def load_tfidf(vectorizer_path=SUPER_PATH + "tfidf_vectorizer.pkl",
     return vectorizer, tfidf_matrix
 
 def check_nltk_data():
+    """
+    Check and download necessary data for NLTK packages.
+    """
     nltk_packages = ['punkt', 'stopwords', 'wordnet']
 
     for package in nltk_packages:
