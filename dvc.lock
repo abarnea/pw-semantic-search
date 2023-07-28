@@ -14,18 +14,18 @@ stages:
       size: 2256858740
     - path: src/create_w2v_model.py
       hash: md5
-      md5: c56f55efb5d0c7654e37a8e210fb847a
-      size: 1823
+      md5: 4703cc8fbe119d304f1dc38deba44e2d
+      size: 1913
     outs:
     - path: models/word2vec_model.bin
       hash: md5
-      md5: 7d3b1407731a59da51aac7996ab8dc1d
+      md5: 328a6cf9e4b067074037b1d0e3020610
       size: 32746955
     - path: models/word2vec_model.bin.syn1neg.npy
       hash: md5
-      md5: f2457858d55682b6f336046e09e8e7ee
+      md5: 596d6cbd92ff7bc1ebeca079b5bbc572
       size: 2000286128
     - path: models/word2vec_model.bin.wv.vectors.npy
       hash: md5
-      md5: 3547abf859103b0d2e5654b46d98a91d
+      md5: 91527bb177f68c8cfba361f793d8643f
       size: 2000286128
