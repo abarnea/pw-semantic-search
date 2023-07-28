@@ -1,5 +1,5 @@
 [core]
-    remote = mystorage
+    remote = storage
     autostage = true
-['remote "mystorage"']
+['remote "storage"']
     url = gs://demoworkflows/semantic_search
