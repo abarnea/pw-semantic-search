@@ -18,7 +18,10 @@ def get_api_key():
     Returns:
         (str) : OpenAI API Key
     """
-    load_dotenv("openai_api_key.env")
+    env_file = "openai_api_key.env"
+
+    if os.path.exists(env_file):
+        load_dotenv("openai_api_key.env")
 
     return os.getenv("OPENAI_API_KEY")
 
