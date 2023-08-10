@@ -9,7 +9,8 @@ import doc_reader as reader
 import md_cleaner as cleaner
 import md_preprocessor as preprocessor
 
-SUPER_PATH = "../models/"
+DATA_PATH = "../data/"
+MODEL_PATH = "../models/"
 
 def get_api_key():
     """
@@ -25,7 +26,7 @@ def get_api_key():
 
     return os.getenv("OPENAI_API_KEY")
 
-def read_clean_process_data(docs: str) -> dict:
+def read_clean_process_data(docs=os.path.join(DATA_PATH, "docs")) -> dict:
     """
     Reads, cleans, and processes input documentation data using the doc_reader,
     md_cleaner, and md_preprocessor stages.
@@ -39,7 +40,7 @@ def read_clean_process_data(docs: str) -> dict:
         preproc_docs (dict) : cleaned and preprocessed documentation data
     """
     if not os.path.exists(docs):
-        raise FileNotFoundError("Documentation folder not downloaded.")
+        raise FileNotFoundError("Documentation folder not downloaded. Run 'dvc pull'.")
 
     doc_data = reader.collect_doc_data(docs)
     cleaned_doc_data = cleaner.clean_doc_data(doc_data)
@@ -66,7 +67,7 @@ def clean_and_preproc_data(input_data):
 
     return cp_data
 
-def load_w2v(model_path=SUPER_PATH + "word2vec_model.bin"):
+def load_w2v(model_path=os.path.join(MODEL_PATH, "word2vec_model.bin")):
     """
     Loads the Word2Vec model from a stored file.
 
@@ -81,8 +82,8 @@ def load_w2v(model_path=SUPER_PATH + "word2vec_model.bin"):
 
     return Word2Vec.load(model_path)
 
-def load_tfidf(vectorizer_path=SUPER_PATH + "tfidf_vectorizer.pkl",
-               matrix_path=SUPER_PATH + "tfidf_matrix.pkl"):
+def load_tfidf(vectorizer_path=os.path.join(MODEL_PATH, "tfidf_vectorizer.pkl"),
+               matrix_path=os.path.join(MODEL_PATH, "tfidf_matrix.pkl")):
     """
     Loads the TF-IDF model vectorizer and matrix from stored files.
 
