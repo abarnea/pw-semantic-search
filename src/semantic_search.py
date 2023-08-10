@@ -39,8 +39,6 @@ def get_file_content_from_filenames(filenames: list, docs: dict) -> dict:
 def semsearch(query,
               preproc_docs,
               w2v_model,
-              vectorizer,
-              tfidf_matrix,
               top_k=5,
               include_score=False,
               verbose=False):

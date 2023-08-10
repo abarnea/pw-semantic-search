@@ -146,9 +146,10 @@ def main():
     hyperlink_dict = reader.create_hyperlink_dict(docs_path)
 
     w2v_model = helper.load_w2v()
-    vectorizer, tfidf_matrix = helper.load_tfidf()
+    # vectorizer, tfidf_matrix = helper.load_tfidf()
 
-    ss_docs = semsearch(query, preproc_docs, w2v_model, vectorizer, tfidf_matrix)
+    # ss_docs = semsearch(query, preproc_docs, w2v_model, vectorizer, tfidf_matrix)
+    ss_docs = semsearch(query, preproc_docs, w2v_model)
 
     gpt_input = optimize_gpt_input(ss_docs)
 
