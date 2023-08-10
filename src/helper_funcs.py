@@ -40,7 +40,7 @@ def read_clean_process_data(docs=os.path.join(DATA_PATH, "docs")) -> dict:
         preproc_docs (dict) : cleaned and preprocessed documentation data
     """
     if not os.path.exists(docs):
-        raise FileNotFoundError("Documentation folder not downloaded. Run 'dvc pull'.")
+        raise FileNotFoundError("Parallel Works documentation not found. Please run 'dvc pull' and try again.")
 
     doc_data = reader.collect_doc_data(docs)
     cleaned_doc_data = cleaner.clean_doc_data(doc_data)
