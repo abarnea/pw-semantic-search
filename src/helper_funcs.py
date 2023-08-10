@@ -39,7 +39,7 @@ def read_clean_process_data(docs: str) -> dict:
         preproc_docs (dict) : cleaned and preprocessed documentation data
     """
     if not os.path.exists(docs):
-        raise FileNotFoundError
+        raise FileNotFoundError("Documentation folder not downloaded.")
 
     doc_data = reader.collect_doc_data(docs)
     cleaned_doc_data = cleaner.clean_doc_data(doc_data)
