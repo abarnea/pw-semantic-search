@@ -2,6 +2,7 @@
 
 cd app
 
+# Code for a bunch of tags to brute-force accomplish clearing, model deletion, model re-training, and model creation. Only useful if DVC and/or Streamlit buttons stop working and you need to undergo these tasks via terminal.
 if [ "$1" = "-c" ]
 then
   echo "Clearing previously stored queries..."
@@ -27,4 +28,10 @@ then
 fi
 
 streamlit run ask_pw_app.py
+
+
+# Need to send port from cluster to usercontainer to properly display on the platform
+# Script port.sh in pw-dvc-workflow contains code to find an open port.
+
+# ssh -R <local_port>:<cluster_ip>:<remote_port> cluster_ip
 
