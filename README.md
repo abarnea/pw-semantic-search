@@ -6,11 +6,13 @@ This project uses the Natural Language Processing (NLP) Word2Vec and Term Freque
 
 The code then retrieves the most relevant documents from Parallel Works Documentation, summarizes them, and returns them to you for your convenience. It will also provide direct links to the aformentioned pages, should you like to read the relevant pages yourself.
 
-### Instructions
+Once you launch the Ask PW User Interface, you can simply type questions into the query box, and the platform will return an answer. Your question will be cached in your `History` sidebar on the left-hand side of your screen. Expanding the box will also reveal the Ask PW answer. All questions and answers are cached in your sidebar until you either `Clear Queries` or restart your cluster (or delete your local directory if running Ask PW locally).
+
+## Instructions
 
 There are two ways of using this interface:
 
-#### Option 1 (Recommended): Use the DVC Wrapper workflow to run Ask PW on the Parallel Works platform
+### Option 1 (Recommended): Use the DVC Wrapper workflow to run Ask PW on the Parallel Works platform
 
 To run Ask PW on the Parallel Works platform, please follow these instructions:
 
@@ -30,7 +32,7 @@ To run Ask PW on the Parallel Works platform, please follow these instructions:
 
 <b>**NOTE:</b> This feature is still under construction. Currently, you are unable to open up the Streamlit UI from the Parallel Works platform.
 
-#### Option 2 (Not Recommended): Run Ask PW on your local computer (requires cloning this repo)
+### Option 2 (Not Recommended): Run Ask PW on your local computer (requires cloning this repo)
 
 To run Ask PW on your local computer, please follow these instructions:
 
@@ -41,11 +43,11 @@ To run Ask PW on your local computer, please follow these instructions:
     2. For EXTERNAL Use: If you are not a Parallel Works employee, you must set up Data Version Control (DVC) in order to download the required Semantic Search models. The Parallel Works `demoworkflows-bucket` (<i>This needs to change to a publically accessible cloud storage bucket</i>) contains the required models. Once you have access, simply run `dvc pull`, and the models will be pulled to their required locations.
 5. Enjoy!
 
-### Note: OpenAI API Key Required for Use of this Repository
+## Note: OpenAI API Key Required for Use of this Repository
 
 In order to run the Ask PW interface, you will need to set up your cluster or system with an OpenAI API Key environment variable. This section contains steps for setting this up.
 
-#### Option 1: Set up your Parallel Works Cluster Bootstrap with your API Key
+### Option 1: Set up your Parallel Works Cluster Bootstrap with your API Key
 
 If you are running the Ask PW interface on the Parallel Works platform, then setting up your OpenAI API Key is very easy! All you have to do is navigate to the `Resources` tab, select the resource you would like to run Ask PW on, go to `Definitions`, and in the `User Bootstrap` section, paste the following text:
 ```
@@ -60,10 +62,12 @@ Doing this will automatically set the `OPENAI_API_Key` environment variable to y
 
 <i>Note:</i> This is also handy if you would like to use a `gpt` model for another project you are working on!
 
-#### Option 2: Run the `set_api.sh` script to set your API key environment variable locally
+### Option 2: Run the `set_api.sh` script to set your API key environment variable locally
 
 If you would like to run the Ask PW interface locally, you can choose to run the `set_api.sh` script, which will prompt you for your API key and load it into an environment file in your local directory (called `openai_api_key.env`). This repository already ignores the file (see `.gitignore`), so it will not be pushed to Github or DVC in any way. If you choose this option, the Ask PW source code will automatically load it from your environment file, so there is nothing else you need to do after entering your API key with the script.
 
-<i>Note 1:</i> If you choose this method, make sure you <i>never</i> share you API key with anyone.
+#### Note 1:
+If you choose this method, make sure you <i>never</i> share you API key with anyone.
 
-<i>Note 2:</i> If you choose this method and you want to run Ask PW in cloud, you will need to re-set your API key each run unless you store the file in your `/contrib` directory. If you do, you will need to modify the path to the environment file in the `helper_funcs.py` script.
+#### Note 2:
+If you choose this method and you want to run Ask PW in cloud, you will need to re-set your API key each run unless you store the file in your `/contrib` directory. If you do, you will need to modify the path to the environment file in the `helper_funcs.py` script.
