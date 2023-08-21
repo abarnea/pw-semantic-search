@@ -17,7 +17,8 @@ There are two ways of using this interface:
 To run Ask PW on the Parallel Works platform, please follow these instructions:
 
 1. Login to your account on the Parallel Works platform.
-2. Run the `DVC Wrapper` workflow; you will be brought to an interface. Enter the following:
+2. Set your OpenAI API Key environment variable (see next section below for instructions on how to do this).
+3. Run the `DVC Wrapper` workflow; you will be brought to an interface. Enter the following:
     1. Select the activate resource you would like to use to run `Ask PW`.
     2. Under `Repository Name`, enter `pw-semantic-search`.
     3. Under `Github Username`, enter `abarnea`.
@@ -28,7 +29,7 @@ To run Ask PW on the Parallel Works platform, please follow these instructions:
         - For Ask PW, this option is run internally whenever the Parallel Works Documentation is updated in order to keep the Ask PW ML models updated for your use. The models are automatically re-trained and re-pushed to cloud storage, so that pulling the models on your end will always download the most up-to-date semantic search models.
     6. Under `Script to Run`, enter `run_app.sh`.
     7. Press `Execute` at the top right corner.
-3. The workflow will now run in its entirety on your selected resource. Once it is done, you will be able to select the blue "eye" icon next to the workflow, which will open up a Streamlit UI in your web browser.**
+4. The workflow will now run in its entirety on your selected resource. Once it is done, you will be able to select the blue "eye" icon next to the workflow, which will open up a Streamlit UI in your web browser.**
 
 <b>**NOTE:</b> This feature is still under construction. Currently, you are unable to open up the Streamlit UI from the Parallel Works platform.
 
@@ -37,7 +38,7 @@ To run Ask PW on the Parallel Works platform, please follow these instructions:
 To run Ask PW on your local computer, please follow these instructions:
 
 1. Clone this repository using `git clone $URL`.
-2. Set your OpenAI API Key environment variable (see `Note` below for instructions on how to do this).
+2. Set your OpenAI API Key environment variable (see next section below for instructions on how to do this).
 3. Run `./run_app.sh`. A Streamlit UI will open up in your browser under `localhost`.
     1. For INTERNAL Use: If it is your first time running this repository and you <i>do not</i> have DVC set-up, you will need to add the flags `-t -u` <i>in that order</i> to download the Parallel Works documentation repository, and train the required models. If you are not a Parallel Works employee, this method is unavailable to you.
     2. For EXTERNAL Use: If you are not a Parallel Works employee, you must set up Data Version Control (DVC) in order to download the required Semantic Search models. The Parallel Works `demoworkflows-bucket` (<i>This needs to change to a publically accessible cloud storage bucket</i>) contains the required models. Once you have access, simply run `dvc pull`, and the models will be pulled to their required locations.
